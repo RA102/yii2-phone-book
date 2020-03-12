@@ -12,8 +12,10 @@ $this->title = 'Phone-book';
 
     <div class="body-content">
 
-        <div class="row">
-
+        <div class="row text-center">
+            <div class="">
+                <a class="btn btn-warning" href="phone-list/index">Телефонный справочник</a>
+            </div>
         </div>
 
     </div>
