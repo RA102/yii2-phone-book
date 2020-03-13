@@ -18,17 +18,21 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Phone List', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php //echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'user.name',
+            'user_id' => [
+                'label' => 'User',
+                'value' => function ($data) {
+                    return $data->user->name;
+                }
+            ],
             'phone',
-            'phoneType.type',
-
+            'phone_type',
             [
                 'class' => 'yii\grid\ActionColumn',
 

@@ -20,9 +20,9 @@ use app\models\PhoneType;
         ]
     ); ?>
 
-    <?= $form->field($model, 'user_id')->textInput()->hint('Введите имя')->label('Имя') ?>
+    <?= $form->field($model, 'user_id')->textInput()->label('Имя') ?>
 
-    <?= $form->field($model, 'phone')->textInput()->hint('Введите номер')->label('Номер') ?>
+    <?= $form->field($model, 'phone')->textInput()->label('Номер') ?>
 
     <?= $form->field($model, 'phone_type')->dropDownList(ArrayHelper::map(PhoneType::find()->all(), 'id', 'type'))->label('Тип') ?>
 

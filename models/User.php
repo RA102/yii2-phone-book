@@ -40,4 +40,10 @@ class User extends \yii\db\ActiveRecord
             'name' => 'Name',
         ];
     }
+
+    public function getPhone()
+    {
+        return $this->hasMany()
+    }
+
 }

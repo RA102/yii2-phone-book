@@ -74,12 +74,13 @@ class PhoneListController extends Controller
             $user = new User();
             $user->name = $name;
             $user->save();
-            $model->user_id = User::findOne(['name' => $name]);
+            $model->user_id = $user->id;
             $model->phone = ArrayHelper::getValue($post, 'phone');
             $model->phone_type = ArrayHelper::getValue($post, 'phone_type');
             $model->save();
 
-            return $this->redirect(['view', 'id' => $model->id]);
+            //return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect('index');
         }
 
         return $this->render('create', [

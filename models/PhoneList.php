@@ -28,9 +28,10 @@ class PhoneList extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            ['user_id', 'safe'],
-            ['phone_type', 'safe'],
-            ['phone', 'integer'],
+//            ['user_id', 'safe' ],
+//            ['phone_type', 'safe' ],
+//            ['phone', 'integer' ],
+            [['user_id', 'phone', 'phone_type'], 'required']
         ];
     }
 
@@ -56,5 +57,11 @@ class PhoneList extends \yii\db\ActiveRecord
     {
         return $this->hasOne(PhoneType::className(),['id' => 'phone_type']);
     }
+
+    public function getAllPhoneUser()
+    {
+
+    }
+
 
 }
