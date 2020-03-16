@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\PhoneList;
+use app\models\PhoneType;
 use Yii;
 use app\models\User;
 use app\models\UserSearch;
@@ -85,6 +87,10 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $phoneList = PhoneList::findAll(['user_id' => $id]);
+
+//        var_dump($phoneList);
+//        die;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -92,6 +98,7 @@ class UserController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'phoneList' => $phoneList
         ]);
     }
 

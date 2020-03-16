@@ -2,12 +2,13 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PhoneListSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Phone Lists';
+$this->title = 'Phones List';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="phone-list-index">
@@ -27,12 +28,31 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'user_id' => [
                 'label' => 'User',
+
                 'value' => function ($data) {
-                    return $data->user->name;
+                    //var_dump("<pre>", $data->user);
+                    return ArrayHelper::getValue($data->user, 'name');
                 }
             ],
-            'phone',
-            'phone_type',
+
+            'phone' => [
+                'label' => '',
+
+                'value' => function ($data) {
+                    //var_dump("<pre>", $data->allPhoneUser);
+                    $phones = '';
+                    foreach ($data->allPhoneUser as $item) {
+                        $phones .= ArrayHelper::getValue($item, 'phone') . ' ';
+                    }
+                    return $phones;
+                }
+            ],
+            'phone_type' => [
+                'label' => 'Тип',
+                'value' => function ($data) {
+                    return $data->phoneType->type ;
+                }
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
 

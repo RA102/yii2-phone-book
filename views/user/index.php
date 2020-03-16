@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UserSearch */
@@ -25,13 +26,24 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
             'name',
+            [
+                'label' => 'Телефоны',
+                'value' => function ($data) {
+                    $phoneString = '';
+                    foreach ($data->phoneLists as $item) {
+                        $phoneString .=  ArrayHelper::getValue($item, 'phone') . ", ";
+                    }
+                    return $phoneString;
+                }
+
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+
+
 
 
 </div>

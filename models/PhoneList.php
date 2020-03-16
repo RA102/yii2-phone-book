@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "phone_list".
@@ -61,7 +62,8 @@ class PhoneList extends \yii\db\ActiveRecord
     public function getAllPhoneUser()
     {
 
+        $query = PhoneList::find('phone')->where(['user_id' => $this->user_id])->all();
+        return $query;
     }
-
 
 }
