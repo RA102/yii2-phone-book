@@ -7,6 +7,7 @@ use app\models\PhoneType;
 use Yii;
 use app\models\User;
 use app\models\UserSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -39,10 +40,12 @@ class UserController extends Controller
     {
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $phoneList = new PhoneList();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'phoneList' => $phoneList
         ]);
     }
 
@@ -67,13 +70,23 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
+        $phoneList = new PhoneList();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) ) {
+            $request = Yii::$app->request->post();
+            $model->name = ArrayHelper::getValue($request, 'User.name');
+            $model->save();
+            $phoneList->user_id = $model->id;
+            $phoneList->phone = ArrayHelper::getValue($request, 'PhoneList.phone');
+            $phoneList->phone_type = ArrayHelper::getValue($request, 'PhoneList.phone_type');
+            $phoneList->save();
+
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'phoneList' => $phoneList
         ]);
     }
 
@@ -88,9 +101,6 @@ class UserController extends Controller
     {
         $model = $this->findModel($id);
         $phoneList = PhoneList::findAll(['user_id' => $id]);
-
-//        var_dump($phoneList);
-//        die;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -130,5 +140,21 @@ class UserController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionAdd($id)
+    {
+        var_dump(Yii::$app->request->post());
+        $model = $this->findModel($id);
+        $phoneList = new PhoneList();
+
+        $phoneList->user_id = $model->id;
+        $phoneList->phone = Yii::$app->request->post('phone');
+        $phoneList->phone_type = Yii::$app->request->post('phone_type');
+
+
+
+
+        return $model->id;
     }
 }

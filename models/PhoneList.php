@@ -10,7 +10,7 @@ use yii\helpers\ArrayHelper;
  *
  * @property int $id
  * @property int|null $user_id
- * @property int|null $phone
+ * @property string|null $phone
  * @property int|null $phone_type
  */
 class PhoneList extends \yii\db\ActiveRecord

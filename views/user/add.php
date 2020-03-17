@@ -25,18 +25,18 @@ $this->params['breadcrumbs'][] = 'Update';
             <table class="table ">
                 <tbody>
 
-                        <?php foreach ($model->phoneLists as $item) { ?>
-                            <tr>
-                                <td>
-                                    <?= ArrayHelper::getValue($item, 'phone', ['options' => ['style' => 'max-width: min-content;']]) ?>
-                                </td>
-                                <td>
-                                    <?= $form->field($item, 'phone_type', ['options' => ['style' => 'width: 200px;']])
-                                        ->dropDownList(ArrayHelper::map(PhoneType::find()->all(), 'id', 'type'), ['options' => ['style' => 'height: 30px;']])
-                                        ->label(false) . "<br>"?>
-                                </td>
-                            </tr>
-                        <?php } ?>
+                <?php foreach ($model->phoneLists as $item) { ?>
+                    <tr>
+                        <td>
+                            <?= ArrayHelper::getValue($item, 'phone', ['options' => ['style' => 'max-width: min-content;']]) ?>
+                        </td>
+                        <td>
+                            <?= $form->field($item, 'phone_type', ['options' => ['style' => 'width: 200px;']])
+                                ->dropDownList(ArrayHelper::map(PhoneType::find()->all(), 'id', 'type'), ['options' => ['style' => 'height: 30px;']])
+                                ->label(false) . "<br>"?>
+                        </td>
+                    </tr>
+                <?php } ?>
 
                 </tbody>
             </table>
@@ -51,6 +51,5 @@ $this->params['breadcrumbs'][] = 'Update';
 
     </div>
 
-    <a href="add"></a>
-
 </div>
+

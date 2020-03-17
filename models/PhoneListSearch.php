@@ -17,7 +17,8 @@ class PhoneListSearch extends PhoneList
     public function rules()
     {
         return [
-            [['id', 'user_id', 'phone', 'phone_type'], 'integer'],
+            [['id', 'user_id', 'phone_type'], 'integer'],
+            [['phone'], 'string']
         ];
     }
 
