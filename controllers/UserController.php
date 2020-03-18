@@ -130,9 +130,8 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        PhoneList::deleteAll(['user_id' => $id]);
         $this->findModel($id)->delete();
-
+        PhoneList::deleteAll(['user_id' => $id]);
 
         return $this->redirect(['index']);
     }
