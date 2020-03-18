@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttons' => [
                     'add' => function ($model, $key, $index) {
                         return Html::a(
-                                '<span class="glyphicon glyphicon-plus"></span>', Url::to(['update', 'id' => $key->id]),  ['id' => 'addPhone']
+                                '<span class="glyphicon glyphicon-plus"></span>', Url::to(['add', 'id' => $key->id]),  ['id' => 'addPhone']
                         );
                     }
                 ]

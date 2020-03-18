@@ -100,10 +100,19 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $phoneList = PhoneList::findAll(['user_id' => $id]);
+        $phoneList = PhoneList::find()->where(['user_id' => $id])->all();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->save() ) {
+            $request = Yii::$app->request->post();
+            $arrayPhoneList = ArrayHelper::getValue($request, 'PhoneList');
+
+            foreach ($arrayPhoneList as $item) {
+                $alterRow = PhoneList::findOne($item['id']);
+                $alterRow->phone = $item['phone'];
+                $alterRow->phone_type = $item['phone_type'];
+                $alterRow->update();
+            }
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
@@ -121,7 +130,9 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
+        PhoneList::deleteAll(['user_id' => $id]);
         $this->findModel($id)->delete();
+
 
         return $this->redirect(['index']);
     }
@@ -144,17 +155,24 @@ class UserController extends Controller
 
     public function actionAdd($id)
     {
-        var_dump(Yii::$app->request->post());
         $model = $this->findModel($id);
         $phoneList = new PhoneList();
 
-        $phoneList->user_id = $model->id;
-        $phoneList->phone = Yii::$app->request->post('phone');
-        $phoneList->phone_type = Yii::$app->request->post('phone_type');
+        if (Yii::$app->request->post()){
+            $request = Yii::$app->request->post();
+
+            $phoneList->user_id = $model->id;
+
+            $phoneList->phone = ArrayHelper::getValue($request, 'PhoneList.phone');
+            $phoneList->phone_type = ArrayHelper::getValue($request, 'PhoneList.phone_type');
+            $phoneList->save();
+
+            $this->redirect('index');
+        }
 
 
-
-
-        return $model->id;
+        return $this->render('add', [
+           'phoneList' => $phoneList,
+        ]);
     }
 }
