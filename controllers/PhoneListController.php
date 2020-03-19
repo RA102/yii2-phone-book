@@ -82,8 +82,6 @@ class PhoneListController extends Controller
             $model->phone = ArrayHelper::getValue($post, 'phone');
             $model->phone_type = ArrayHelper::getValue($post, 'phone_type');
             $model->save();
-
-            //return $this->redirect(['view', 'id' => $model->id]);
             return $this->redirect('index');
         }
 

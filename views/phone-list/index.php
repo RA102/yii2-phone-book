@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => '',
 
                 'value' => function ($data) {
-                    //var_dump("<pre>", $data->allPhoneUser);
+
                     $phones = '';
                     foreach ($data->allPhoneUser as $item) {
                         $phones .= ArrayHelper::getValue($item, 'phone') . ' ';

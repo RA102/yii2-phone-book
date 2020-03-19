@@ -85,28 +85,3 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-
-<?php
-$script = <<<JS
-$('document').ready(function(){
-    let url;
-    // $('#addPhone').on('click', function(event) {
-    //     event.preventDefault();
-    //     url = this.href;
-    //     console.log(url);
-    //     $('#myModal').modal('show');
-    // });
-    // $("button:contains('Save')").on('click', function(e) {
-    //     e.preventDefault();
-    //   $.ajax({
-    //         url: url,
-    //         success: function(data) {   
-    //             console.log(data);
-    //         }
-    //     })
-    // });
-})
- 
-JS;
-$this->registerJs($script, View::POS_END);
-?>
