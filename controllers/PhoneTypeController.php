@@ -3,18 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\User;
-use app\models\PhoneList;
-use app\models\PhoneListSearch;
-use yii\helpers\ArrayHelper;
+use app\models\PhoneType;
+use app\models\PhoneTypeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PhoneListController implements the CRUD actions for PhoneList model.
+ * PhoneTypeController implements the CRUD actions for PhoneType model.
  */
-class PhoneListController extends Controller
+class PhoneTypeController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -32,12 +30,12 @@ class PhoneListController extends Controller
     }
 
     /**
-     * Lists all PhoneList models.
+     * Lists all PhoneType models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new PhoneListSearch();
+        $searchModel = new PhoneTypeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -47,7 +45,7 @@ class PhoneListController extends Controller
     }
 
     /**
-     * Displays a single PhoneList model.
+     * Displays a single PhoneType model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -60,29 +58,16 @@ class PhoneListController extends Controller
     }
 
     /**
-     * Creates a new PhoneList model.
+     * Creates a new PhoneType model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new PhoneList();
+        $model = new PhoneType();
 
-        if ($model->load(Yii::$app->request->post())) {
-            $post = Yii::$app->request->post('PhoneList');
-            $name = ArrayHelper::getValue($post, 'user_id');
-            if (User::find()->where(['name' => $name])->exists()) {
-                $user = User::findOne(['name' => $name]);
-            } else {
-                $user = new User();
-                $user->name = $name;
-                $user->save();
-            }
-            $model->user_id = $user->id;
-            $model->phone = ArrayHelper::getValue($post, 'phone');
-            $model->phone_type = ArrayHelper::getValue($post, 'phone_type');
-            $model->save();
-            return $this->redirect('index');
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -91,7 +76,7 @@ class PhoneListController extends Controller
     }
 
     /**
-     * Updates an existing PhoneList model.
+     * Updates an existing PhoneType model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -111,7 +96,7 @@ class PhoneListController extends Controller
     }
 
     /**
-     * Deletes an existing PhoneList model.
+     * Deletes an existing PhoneType model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -125,15 +110,15 @@ class PhoneListController extends Controller
     }
 
     /**
-     * Finds the PhoneList model based on its primary key value.
+     * Finds the PhoneType model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return PhoneList the loaded model
+     * @return PhoneType the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = PhoneList::findOne($id)) !== null) {
+        if (($model = PhoneType::findOne($id)) !== null) {
             return $model;
         }
 

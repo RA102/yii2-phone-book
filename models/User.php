@@ -41,9 +41,17 @@ class User extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getPhone()
+    public function getPhoneLists()
     {
-        return $this->hasMany()
+        return $this->hasMany(PhoneList::className(), ['user_id' => 'id']);
     }
+
+    public function getPhoneUser()
+    {
+        $query = PhoneList::find()->where(['user_id' => $this->id])->all();
+        return $query;
+    }
+
+
 
 }

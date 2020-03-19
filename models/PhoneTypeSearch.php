@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\PhoneList;
+use app\models\PhoneType;
 
 /**
- * PhoneListSearch represents the model behind the search form of `app\models\PhoneList`.
+ * PhoneTypeSearch represents the model behind the search form of `app\models\PhoneType`.
  */
-class PhoneListSearch extends PhoneList
+class PhoneTypeSearch extends PhoneType
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class PhoneListSearch extends PhoneList
     public function rules()
     {
         return [
-            [['id', 'user_id', 'phone_type'], 'integer'],
-            [['phone'], 'string']
+            [['id'], 'integer'],
+            [['type'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class PhoneListSearch extends PhoneList
      */
     public function search($params)
     {
-        $query = PhoneList::find();
+        $query = PhoneType::find();
 
         // add conditions that should always apply here
 
@@ -59,10 +59,9 @@ class PhoneListSearch extends PhoneList
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => $this->user_id,
-            'phone' => $this->phone,
-            'phone_type' => $this->phone_type,
         ]);
+
+        $query->andFilterWhere(['like', 'type', $this->type]);
 
         return $dataProvider;
     }
