@@ -10,7 +10,6 @@ class_name: FunctionalTester
 modules:
     enabled:
       - Filesystem
-      - Yii2
-      - PhpBrowser:
-          url: http://luxystech.loc/web/
+      - Yii2:
+          configFile: 'config/test.php'
 
